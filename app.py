@@ -621,7 +621,7 @@ def _run_analysis_pipeline(tickers: List[str]) -> None:
             continue
 
         # ── Download transcript ────────────────────────────────────────
-        _log(f"  Downloading transcript…")
+        _log("  Downloading transcript…")
         doc = fetch_latest_transcript(ticker, doc_links, st.session_state.cookies)
         if not doc:
             _log(f"  ⚠ Could not download transcript for {ticker}")
@@ -639,7 +639,7 @@ def _run_analysis_pipeline(tickers: List[str]) -> None:
         })
 
         # ── Extract text ───────────────────────────────────────────────
-        _log(f"  Extracting text…")
+        _log("  Extracting text…")
         local_path = Path(doc["local_path"])
         text = extract_text(local_path)
         if not text:
@@ -662,9 +662,9 @@ def _run_analysis_pipeline(tickers: List[str]) -> None:
             _log(f"  ✗ AI error: {err_str}")
             if "credits" in err_str.lower() or "billing" in err_str.lower():
                 st.error(
-                    f"**Anthropic API has no credits.** "
-                    f"Please top up at https://console.anthropic.com/settings/billing "
-                    f"and retry.",
+                    "**Anthropic API has no credits.** "
+                    "Please top up at https://console.anthropic.com/settings/billing "
+                    "and retry.",
                     icon="💳",
                 )
                 break  # Stop pipeline — all subsequent calls will fail too
@@ -676,7 +676,7 @@ def _run_analysis_pipeline(tickers: List[str]) -> None:
             continue
 
         analysis["transcript_id"] = tr_id
-        analysis_id = db.save_analysis(analysis)
+        db.save_analysis(analysis)
 
         # ── Score ──────────────────────────────────────────────────────
         gb_metrics = st.session_state.gb_metrics.get(ticker, {})
@@ -699,7 +699,6 @@ def _render_analysis_card(analysis: Dict[str, Any]) -> None:
     guidance_sc = float(analysis.get("guidance_score") or 0)
     prod_sc     = float(analysis.get("new_product_score") or 0)
     tone        = (analysis.get("management_tone") or "neutral").replace("_", " ").title()
-    color       = score_color(total)
     label       = score_label(total)
 
     with st.expander(

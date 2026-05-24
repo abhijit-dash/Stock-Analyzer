@@ -30,7 +30,7 @@ def _human_delay(min_ms: int = 80, max_ms: int = 350) -> None:
     time.sleep(random.uniform(min_ms / 1000, max_ms / 1000))
 
 
-def _type_humanlike(locator: "Locator", text: str) -> None:  # type: ignore[name-defined]
+def _type_humanlike(locator: "Locator", text: str) -> None:  # type: ignore[name-defined]  # noqa: F821
     """Type text one character at a time with random inter-key delays."""
     for char in text:
         locator.press(char)
