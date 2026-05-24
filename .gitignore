@@ -216,3 +216,24 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+.streamlit/
+
+# ── Stock Analyzer — project-specific ─────────────────────────────────────────
+# Runtime data directories (auto-created by config.py at startup)
+# cache/ holds live screener.in session tokens — never commit
+# data/  holds the SQLite database with scraped financials
+# logs/  holds app logs, debug screenshots, and throwaway scripts
+# reports/ and transcripts/ hold generated/downloaded artifacts
+cache/
+data/
+reports/
+transcripts/
+logs/
+
+# Databases (belt-and-suspenders for any .db that lands outside data/)
+*.db
+*.sqlite
+*.sqlite3
+
+# Claude Code IDE settings (settings.local.json may contain API keys)
+.claude/
